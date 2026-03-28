@@ -12,10 +12,10 @@ const upload = multer()                                   // initializes multer 
 
 app.use(cors())                                           // enables cross-origin requests (react -> node)
 
-const ai = new GoogleGenAI({apiKey: process.env.API_KEY}) // creates gemini client instance. Uses your API key from .env
+const ai = new GoogleGenAI({apiKey: process.env.API_KEY}) // creates gemini client instance
 
 app.get("/", (req, res) => {
-  res.json({ message: "Backend running" })                // this sends a JSON response to the client, automatically converting a js object or value into a JSON formatted string and setting the appropriate HTTP headers
+  res.json({ message: "Backend running" })                // this sends a JSON response to the client, automatically converting a js object or value into a JSON formatted string
 })
 
 app.post(
@@ -47,8 +47,18 @@ app.post(
         model: "gemini-2.5-flash",                         // fast + cheaper model
         contents: [                                        // input to the AI. Its contains three parts, 1.prompt, 2.first image, 2.second image
           prompt,
-          {inlineData: {mimeType: baseline.mimetype, data: baseline.buffer.toString("base64")}},  // converts binary image to base64 string. Why base64? because http -> textbased, images -> binary so we must convert. So convert binary -> base64 string
-          {inlineData: {mimeType: current.mimetype, data: current.buffer.toString("base64")}},
+          {
+            inlineData : {
+              mimeType: baseline.mimetype,
+              data: baseline.buffer.toString("base64")     // converts binary image to base64 string. Why base64? because http -> textbased, images -> binary so we must convert. So convert binary -> base64 string
+            }
+          },
+          {
+            inlineData: {
+            mimeType: current.mimetype,
+            data: current.buffer.toString("base64")
+            }
+          },
         ]
       })
 
