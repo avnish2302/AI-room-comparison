@@ -44,7 +44,7 @@ app.post(
                 `
 
       const response = await ai.models.generateContent({   // calls gemini model. await -> wait until response comes
-        model: "gemini-2.5-flash",                         // fast + cheaper model
+        model: "gemini-2.5-flash",
         contents: [                                        // input to the AI. Its contains three parts, 1.prompt, 2.first image, 2.second image
           prompt,
           {
